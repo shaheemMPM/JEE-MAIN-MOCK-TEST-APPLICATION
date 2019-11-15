@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="error"><%= typeof msg != 'undefined' ? msg : '' %></div>
+    <div class="main">
+      <p class="sign" align="center">Register</p>
+      <form class="form1" action="/register" method="post">
+        <input class="pass" name="username" type="text" align="center" placeholder="User Name" required>
+        <input class="pass" name="password" type="password" align="center" placeholder="Password" required>
+        <input class="pass" name="key" type="password" align="center" placeholder="Access Code" required>
+        <button class="submit" align="center">Register</button>
+        <p class="forgot" align="center">
+          <a href="mailto:shaheem.mpm@gmail.com?Subject=Forgot%20Access%20Code%20Of%20Mock%20Test%20Application">Forgot Access Code?</a>
+        </p>
+      </form>
+    </div>
+  </body>
+</html>

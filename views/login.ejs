@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="error"><%= typeof msg != 'undefined' ? msg : '' %></div>
+      <p class="sign" align="center">Login</p>
+      <form class="form1" action="/login" method="post">
+        <input class="pass" name="username" type="text" align="center" placeholder="User Name">
+        <input class="pass" name="password" type="password" align="center" placeholder="Password">
+        <button class="submit" align="center">Login</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -14,14 +14,6 @@
       .mar-top{
         margin-top: 15px;
       }
-      .error{
-        margin-bottom: 10px;
-        color: red;
-      }
-      .success{
-        margin-bottom: 10px;
-        color: green;
-      }
     </style>
 </head>
 
@@ -110,8 +102,6 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
-              <div class="error"><%= typeof msg != 'undefined' ? msg : '' %></div>
-              <div class="success"><%= typeof status != 'undefined' ? status : '' %></div>
               <textarea name="editor1" id="qncode"></textarea>
               <form action="/dashboard/qnupload" method="post" enctype="multipart/form-data" id="qnupload">
                 <div class="form-group mar-top">
@@ -120,13 +110,14 @@
                 </div>
                 <div class="form-group">
                   <label for="slctOptn">Select Correct Option</label>
-                  <select class="form-control" id="slctOptn" name="croption">
+                  <!-- <select class="form-control" id="slctOptn" name="croption">
                     <option>A</option>
                     <option>B</option>
                     <option>C</option>
                     <option>D</option>
                     <option>E</option>
-                  </select>
+                  </select> -->
+                  <input type="text" class="form-control" name="croption" placeholder="Enter Correct Option / Answer" required>
                 </div>
                 <button type="button" class="btn btn-fill btn-primary" id="btnUpload">Upload</button>
               </form>

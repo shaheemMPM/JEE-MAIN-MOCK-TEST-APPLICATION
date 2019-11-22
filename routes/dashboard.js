@@ -2,7 +2,8 @@ const express     = require('express'),
       app         = express(),
       userFns     = require('../functions/functions'),
       multer      = require('multer'),
-      path        = require('path')
+      path        = require('path'),
+      qnDb        = require('../models/questions')
 
 // set storage engine
 const storage = multer.diskStorage({
@@ -66,18 +67,32 @@ app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
       res.redirect('/dashboard/uploadqn/error')
     }else {
       if (req.file == undefined) {
-        console.log(`No file selected`)
-        console.log(`Body = \n`)
-        console.log(req.body)
-        console.log(`File = \n`)
-        console.log(req.file)
-        res.redirect('/dashboard/uploadqn/'+req.body.subject)
+        // No file selected
+        qnDb.create({
+          subject: req.body.subject.toLowerCase(),
+          description: req.body.question,
+          option: req.body.croption,
+          image: ''
+        }, (err, saved) => {
+          if (err) {
+            res.redirect('/dashboard/uploadqn/error')
+          }else {
+            res.redirect('/dashboard/uploadqn/'+req.body.subject)
+          }
+        })
       }else {
-        console.log(`Body = \n`)
-        console.log(req.body)
-        console.log(`File = \n`)
-        console.log(req.file)
-        res.redirect('/dashboard/uploadqn/'+req.body.subject)
+        qnDb.create({
+          subject: req.body.subject.toLowerCase(),
+          description: req.body.question,
+          option: req.body.croption,
+          image: req.file.filename
+        }, (err, saved) => {
+          if (err) {
+            res.redirect('/dashboard/uploadqn/error')
+          }else {
+            res.redirect('/dashboard/uploadqn/'+req.body.subject)
+          }
+        })
       }
     }
   })

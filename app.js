@@ -11,6 +11,7 @@ const express               = require('express'),
       adminSchema           = require('./models/admin'),
       dashboardRoutes       = require('./routes/dashboard')
 
+
 // Connecting Database
 mongoose.connect('mongodb://localhost/insight', {useNewUrlParser: true, useUnifiedTopology: true})
 

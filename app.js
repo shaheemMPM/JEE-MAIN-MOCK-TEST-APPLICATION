@@ -9,11 +9,16 @@ const express               = require('express'),
       passportLocalMongoose = require('passport-local-mongoose'),
       userFns               = require('./functions/functions'),
       adminSchema           = require('./models/admin'),
-      dashboardRoutes       = require('./routes/dashboard')
+      dashboardRoutes       = require('./routes/dashboard'),
+      stdRoutes             = require('./routes/students')
 
 
 // Connecting Database
 mongoose.connect('mongodb://localhost/insight', {useNewUrlParser: true, useUnifiedTopology: true})
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 // setting view engine
 app.set('view engine', 'ejs')
@@ -37,6 +42,7 @@ passport.deserializeUser(adminSchema.deserializeUser())
 // Setting up routes
 app.use('/', adminRoutes)
 app.use('/dashboard', dashboardRoutes)
+app.use('/student', stdRoutes)
 
 // Activating server
 const port = process.env.PORT || 3000

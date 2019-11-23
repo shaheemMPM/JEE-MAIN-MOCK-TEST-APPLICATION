@@ -1,11 +1,11 @@
 const mongoose              = require('mongoose'),
       passportLocalMongoose = require('passport-local-mongoose')
 
-let adminSchema = new mongoose.Schema({
+let stdSchema = new mongoose.Schema({
   username: {type: String, unique : true, required : true, dropDups: true},
   password: {type: String}
 })
 
-adminSchema.plugin(passportLocalMongoose)
+stdSchema.plugin(passportLocalMongoose)
 
-module.exports = mongoose.model("Admin", adminSchema)
+module.exports = mongoose.model("Student", stdSchema)

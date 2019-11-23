@@ -99,7 +99,7 @@ app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
         })
       }else {
         qnDb.create({
-          subject: req.body.subject.toLowerCase(),
+          subject: req.body.subject,
           description: req.body.question,
           option: req.body.croption,
           image: req.file.filename

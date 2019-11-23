@@ -5,6 +5,10 @@ const express     = require('express'),
       path        = require('path'),
       qnDb        = require('../models/questions')
 
+const groupRule = [{ $group : { _id : "$subject", total : { $sum : 1 } } }],
+      dbError   = {results: [{_id: "error", total:  0}, {_id: "error", total:  0}, {_id: "error", total:  0}]}
+
+
 // set storage engine
 const storage = multer.diskStorage({
   destination : './public/uploads/',
@@ -41,7 +45,14 @@ function checkFileType(file, cb) {
 }
 
 app.get('/', userFns.isLoggedIn,(req, res) => {
-  res.render('dashboard')
+  qnDb.aggregate(groupRule, (err, results) => {
+      if (err) {
+        res.render('dashboard', dbError)
+      }else {
+        res.render('dashboard', {results: results})
+      }
+    }
+  )
 })
 
 app.get('/uploadqn', userFns.isLoggedIn, (req, res) => {
@@ -57,7 +68,13 @@ app.get('/viewqn', userFns.isLoggedIn, (req, res) => {
 })
 
 app.get('/viewqn/:subject', userFns.isLoggedIn, (req, res) => {
-  res.render('viewsubject', {subject: req.params.subject})
+  qnDb.find({subject: req.params.subject}, '-__v -subject',(err, data) => {
+    if (err) {
+      res.render('viewsubject', {subject: req.params.subject, msg: err, data: []})
+    }else {
+      res.render('viewsubject', {subject: req.params.subject, data: data, msg: ''})
+    }
+  })
 })
 
 app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
@@ -69,7 +86,7 @@ app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
       if (req.file == undefined) {
         // No file selected
         qnDb.create({
-          subject: req.body.subject.toLowerCase(),
+          subject: req.body.subject,
           description: req.body.question,
           option: req.body.croption,
           image: ''
@@ -95,6 +112,24 @@ app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
         })
       }
     }
+  })
+})
+
+app.get('/delqn/:subject/:qnid', (req, res) => {
+  qnDb.deleteOne({ _id: req.params.qnid }, (err) => {
+    if (err) {
+      console.log(`Error on removing single question from db : ${err}`)
+    }
+    res.redirect('/dashboard/viewqn/'+req.params.subject)
+  })
+})
+
+app.get('/clearqndb/:subject', (req, res) => {
+  qnDb.deleteMany({subject: req.params.subject}, (erdb) => {
+    if (erdb) {
+      console.log(`Error on Clearing DB : ${erdb}`)
+    }
+    res.redirect('/dashboard/viewqn')
   })
 })
 

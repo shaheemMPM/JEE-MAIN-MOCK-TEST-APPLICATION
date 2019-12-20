@@ -40,7 +40,8 @@ passport.serializeUser(userSchema.serializeUser())
 passport.deserializeUser(userSchema.deserializeUser())
 
 app.get('/', userFns.isNotLoggedIn, (req, res) => {
-  res.send('Student Login Page')
+  res.redirect('/login')
+  // later make to student login page for better convinience
 })
 
 // Setting up routes

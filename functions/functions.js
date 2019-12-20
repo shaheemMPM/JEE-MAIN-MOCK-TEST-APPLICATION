@@ -2,8 +2,8 @@ module.exports = {
   startServer: function (temp) {
     console.log(`\n${new Date().toLocaleString()} : App Started Running on Port : ${temp}\n`)
   },
-  isLoggedIn: function (req, res, next) {
-    if (req.isAuthenticated()) {
+  isAdminLoggedIn: function (req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin) {
       return next()
     }
     res.redirect('/')

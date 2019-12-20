@@ -8,10 +8,9 @@ const express               = require('express'),
       localStratergy        = require('passport-local'),
       passportLocalMongoose = require('passport-local-mongoose'),
       userFns               = require('./functions/functions'),
-      adminSchema           = require('./models/admin'),
+      userSchema           = require('./models/user'),
       dashboardRoutes       = require('./routes/dashboard'),
       stdRoutes             = require('./routes/students')
-
 
 // Connecting Database
 mongoose.connect('mongodb://localhost/insight', {useNewUrlParser: true, useUnifiedTopology: true})
@@ -35,9 +34,14 @@ app.use(require('express-session')({
 // setting up passport
 app.use(passport.initialize())
 app.use(passport.session())
-passport.use(new localStratergy(adminSchema.authenticate()))
-passport.serializeUser(adminSchema.serializeUser())
-passport.deserializeUser(adminSchema.deserializeUser())
+
+passport.use(new localStratergy(userSchema.authenticate()))
+passport.serializeUser(userSchema.serializeUser())
+passport.deserializeUser(userSchema.deserializeUser())
+
+app.get('/', userFns.isNotLoggedIn, (req, res) => {
+  res.send('Student Login Page')
+})
 
 // Setting up routes
 app.use('/', adminRoutes)

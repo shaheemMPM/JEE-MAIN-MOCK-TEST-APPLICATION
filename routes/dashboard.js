@@ -44,7 +44,7 @@ function checkFileType(file, cb) {
   }
 }
 
-app.get('/', userFns.isLoggedIn,(req, res) => {
+app.get('/', userFns.isAdminLoggedIn,(req, res) => {
   qnDb.aggregate(groupRule, (err, results) => {
       if (err) {
         res.render('dashboard', dbError)
@@ -55,19 +55,19 @@ app.get('/', userFns.isLoggedIn,(req, res) => {
   )
 })
 
-app.get('/uploadqn', userFns.isLoggedIn, (req, res) => {
+app.get('/uploadqn', userFns.isAdminLoggedIn, (req, res) => {
   res.render('questions')
 })
 
-app.get('/uploadqn/:subject', userFns.isLoggedIn, (req, res) => {
+app.get('/uploadqn/:subject', userFns.isAdminLoggedIn, (req, res) => {
   res.render('subject', {subject: req.params.subject})
 })
 
-app.get('/viewqn', userFns.isLoggedIn, (req, res) => {
+app.get('/viewqn', userFns.isAdminLoggedIn, (req, res) => {
   res.render('viewqns')
 })
 
-app.get('/viewqn/:subject', userFns.isLoggedIn, (req, res) => {
+app.get('/viewqn/:subject', userFns.isAdminLoggedIn, (req, res) => {
   qnDb.find({subject: req.params.subject}, '-__v -subject',(err, data) => {
     if (err) {
       res.render('viewsubject', {subject: req.params.subject, msg: err, data: []})
@@ -77,7 +77,7 @@ app.get('/viewqn/:subject', userFns.isLoggedIn, (req, res) => {
   })
 })
 
-app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
+app.post('/qnupload', userFns.isAdminLoggedIn, (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       console.log(`Error on upload : ${err}`)
@@ -115,7 +115,7 @@ app.post('/qnupload', userFns.isLoggedIn, (req, res) => {
   })
 })
 
-app.get('/delqn/:subject/:qnid', (req, res) => {
+app.get('/delqn/:subject/:qnid', userFns.isAdminLoggedIn, (req, res) => {
   qnDb.deleteOne({ _id: req.params.qnid }, (err) => {
     if (err) {
       console.log(`Error on removing single question from db : ${err}`)
@@ -124,7 +124,7 @@ app.get('/delqn/:subject/:qnid', (req, res) => {
   })
 })
 
-app.get('/clearqndb/:subject', (req, res) => {
+app.get('/clearqndb/:subject', userFns.isAdminLoggedIn, (req, res) => {
   qnDb.deleteMany({subject: req.params.subject}, (erdb) => {
     if (erdb) {
       console.log(`Error on Clearing DB : ${erdb}`)

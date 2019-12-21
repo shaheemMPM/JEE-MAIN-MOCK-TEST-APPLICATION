@@ -82,4 +82,15 @@ app.get('/clearstudents', userFns.isAdminLoggedIn, (req, res) => {
   })
 })
 
+app.get('/moniter', userFns.isAdminLoggedIn, (req, res) => {
+  stData.find({}, (err, results) => {
+    if (err) {
+      console.log(`Error on rendering student page data : ${err}`)
+      res.render('monitor', {data: []})
+    }else {
+      res.render('monitor', {data: results})
+    }
+  })
+})
+
 module.exports = app

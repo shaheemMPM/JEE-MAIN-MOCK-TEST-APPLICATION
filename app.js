@@ -8,9 +8,10 @@ const express               = require('express'),
       localStratergy        = require('passport-local'),
       passportLocalMongoose = require('passport-local-mongoose'),
       userFns               = require('./functions/functions'),
-      userSchema           = require('./models/user'),
+      userSchema            = require('./models/user'),
       dashboardRoutes       = require('./routes/dashboard'),
-      stdRoutes             = require('./routes/students')
+      stdRoutes             = require('./routes/students'),
+      userRoutes            = require('./routes/userview')
 
 // Connecting Database
 mongoose.connect('mongodb://localhost/insight', {useNewUrlParser: true, useUnifiedTopology: true})
@@ -40,7 +41,7 @@ passport.serializeUser(userSchema.serializeUser())
 passport.deserializeUser(userSchema.deserializeUser())
 
 app.get('/', userFns.isNotLoggedIn, (req, res) => {
-  res.redirect('/login')
+  res.redirect('/user/login')
   // later make to student login page for better convinience
 })
 
@@ -48,6 +49,7 @@ app.get('/', userFns.isNotLoggedIn, (req, res) => {
 app.use('/', adminRoutes)
 app.use('/dashboard', dashboardRoutes)
 app.use('/student', stdRoutes)
+app.use('/user', userRoutes)
 
 // Activating server
 const port = process.env.PORT || 3000

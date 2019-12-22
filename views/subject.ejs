@@ -105,11 +105,22 @@
               <textarea name="editor1" id="qncode"></textarea>
               <form action="/dashboard/qnupload" method="post" enctype="multipart/form-data" id="qnupload">
                 <div class="form-group mar-top">
+                  <label for="slctOptn">Enter Question Number (In Order of Appearance in Exam)</label>
+                  <input type="text" class="form-control" name="qno" placeholder="Question Number" required>
+                </div>
+                <div class="form-group mar-top">
                   <label for="qnImg">Optional Image</label>
                   <input name="qnimg" class="form-control-file" type="file" id="qnImg">
                 </div>
                 <div class="form-group">
-                  <label for="slctOptn">Select Correct Option</label>
+                  <label for="qntype">Select Question Type</label>
+                  <div>
+                    <input type="radio" name="qntype" value="1" required> MCQ &nbsp; &nbsp; &nbsp;
+                    <input type="radio" name="qntype" value="2" required> Numeric
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="slctOptn">Enter Correct Option</label>
                   <!-- <select class="form-control" id="slctOptn" name="croption">
                     <option>A</option>
                     <option>B</option>

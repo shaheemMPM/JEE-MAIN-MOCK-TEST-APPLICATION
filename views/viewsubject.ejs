@@ -20,6 +20,7 @@
           margin-top: 40px;
           font-weight: bolder;
           color: green;
+          width: 100%;
         }
         .question{
           margin-bottom: 20px;
@@ -132,14 +133,20 @@
                       </div>
                       <div class="card-body">
                         <div class="container">
-                          <div class="question">Question : </div>
+                          <div class="question">Question : <%= el.qno %></div>
                           <%- el.description %>
                           <% if(el.image != ''){ %>
                             <img src="../../uploads/<%= el.image %>" class="question-image" alt="question image can't preview">
                           <% } %>
                         </div>
+                        <div class="correct-ans">
+
+                        </div>
                         <div class="container correct-ans">
-                          Answer : <%= el.option %>
+                          <div class="row">
+                            <div class="col-6">Answer : <%= el.option %></div>
+                            <div class="col-6" style="color: blue; width: 100%; text-align: right">Type : <%= el.qtype == 1 ? 'MCQ' : 'Numeric' %></div>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <style media="screen">
+      .noselect {
+        cursor: default;
+        -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+           -khtml-user-select: none; /* Konqueror HTML */
+             -moz-user-select: none; /* Old versions of Firefox */
+              -ms-user-select: none; /* Internet Explorer/Edge */
+                  user-select: none; /* Non-prefixed version, currently
+                                        supported by Chrome, Opera and Firefox */
+      }
+    </style>
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="error"><%= typeof msg != 'undefined' ? msg : '' %></div>
+      <p class="sign noselect" align="center">Login</p>
+      <form class="form1" action="/user/login" method="post">
+        <input class="pass" name="username" type="text" align="center" placeholder="User Name">
+        <input class="pass" name="password" type="password" align="center" placeholder="Password">
+        <button class="submit" align="center">Login</button>
+      </form>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener('contextmenu', event => event.preventDefault())
+    </script>
+  </body>
+</html>

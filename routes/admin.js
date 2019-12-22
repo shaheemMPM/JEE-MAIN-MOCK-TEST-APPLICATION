@@ -28,9 +28,9 @@ app.post('/register', userFns.isNotLoggedIn, (req, res) => {
   }
 })
 
-app.get('/login', userFns.isNotLoggedIn, (req, res) => {
-  res.render('login')
-})
+// app.get('/login', userFns.isNotLoggedIn, (req, res) => {
+//   res.render('login')
+// })
 
 app.post('/login', userFns.isNotLoggedIn, passport.authenticate('local', {
     successRedirect : '/dashboard',
@@ -40,7 +40,7 @@ app.post('/login', userFns.isNotLoggedIn, passport.authenticate('local', {
 
 app.get('/logout', userFns.isAdminLoggedIn, (req, res) => {
   req.logout()
-  res.redirect('/')
+  res.redirect('/user/login')
 })
 
 module.exports = app

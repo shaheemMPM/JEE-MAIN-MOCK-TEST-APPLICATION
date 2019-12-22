@@ -87,11 +87,15 @@ app.post('/qnupload', userFns.isAdminLoggedIn, (req, res) => {
         // No file selected
         qnDb.create({
           subject: req.body.subject,
+          qno: req.body.qno,
           description: req.body.question,
+          qtype: req.body.qntype,
           option: req.body.croption,
           image: ''
         }, (err, saved) => {
           if (err) {
+            console.log(req.body)
+            console.log(`\n${new Date().toLocaleString()} : Error on qn upload to db without image ::\n${err}\n`)
             res.redirect('/dashboard/uploadqn/error')
           }else {
             res.redirect('/dashboard/uploadqn/'+req.body.subject)
@@ -100,11 +104,14 @@ app.post('/qnupload', userFns.isAdminLoggedIn, (req, res) => {
       }else {
         qnDb.create({
           subject: req.body.subject,
+          qno: req.body.qno,
           description: req.body.question,
+          qtype: req.body.qntype,
           option: req.body.croption,
           image: req.file.filename
         }, (err, saved) => {
           if (err) {
+            console.log(`\n${new Date().toLocaleString()} : Error on qn upload to db with image ::\n${err}\n`)
             res.redirect('/dashboard/uploadqn/error')
           }else {
             res.redirect('/dashboard/uploadqn/'+req.body.subject)

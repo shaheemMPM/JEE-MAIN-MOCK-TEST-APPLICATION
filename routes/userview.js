@@ -77,7 +77,7 @@ app.get('/finish/:id', userFns.isUserLoggedIn, (req, res) => {
   if (req.params.id === '03026bbc133714df') {
     stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 2, end_time: new Date }}, (erru, upd) => {
       if (erru) {
-        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam ::\n${erru}\n`)
+        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.0 ::\n${erru}\n`)
         res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
       }else {
         console.log(`\n${new Date().toLocaleString()} : ${req.user.username} Finished Exam\n\n`)
@@ -86,9 +86,16 @@ app.get('/finish/:id', userFns.isUserLoggedIn, (req, res) => {
       }
     })
   }else {
-    console.log(`\n${new Date().toLocaleString()} : XSS Attack Detected\nIP of Attacker : ${req.connection}\nUser: ${req.user.username}\n`)
-    req.logout()
-    res.send(`<script>alert("You Are Disqualified due to un autherised XSS Activity")</script>`)
+    console.log(`\n${new Date().toLocaleString()} : XSS Attack Detected\nIP of Attacker : ${req.connection.remoteAddress}\nUser: ${req.user.username}\n`)
+    stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 3, end_time: new Date }}, (erru, upd) => {
+      if (erru) {
+        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.1 ::\n${erru}\n`)
+        res.send(`<script>alert("You Are Disqualified due to un autherised XSS Activity")</script>`)
+      }else {
+        req.logout()
+        res.send(`<script>alert("You Are Disqualified due to un autherised XSS Activity")</script>`)
+      }
+    })
   }
 })
 

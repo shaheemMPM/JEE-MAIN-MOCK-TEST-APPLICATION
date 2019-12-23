@@ -44,7 +44,6 @@ app.get('/delelte/:stdid', userFns.isAdminLoggedIn, (req, res) => {
       console.log(`Error on finding std data while trying to delete std : ${err}`)
       res.redirect('/student/createstd')
     }else {
-      console.log(find[0].regno)
       userSchema.deleteOne({username: find[0].regno}, (errm) => {
         if (errm) {
           console.log(`Error while trying to delete student meta : ${errm}`)

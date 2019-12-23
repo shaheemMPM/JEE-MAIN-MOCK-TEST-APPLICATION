@@ -24,6 +24,38 @@
                     user-select: none; /* Non-prefixed version, currently
                                           supported by Chrome, Opera and Firefox */
         }
+        .round{
+          width: 35px;
+          height: 35px;
+          display: block;
+          border-radius: 50%;
+          text-align: center;
+          margin: 0px auto;
+          padding-top: 5px;
+          font-weight: bolder;
+        }
+        .col-3, .col-6{
+          margin-bottom: 20px;
+        }
+        .green{
+          color: white;
+          background: rgb(66, 150, 77);
+        }
+        .blue{
+          color: white;
+          background: rgb(0, 108, 255);
+        }
+        .purple{
+          color: white;
+          background: rgb(153, 66, 210);
+        }
+        .red{
+          color: white;
+          background: rgb(233, 47, 0);
+        }
+        td{
+          padding: 10px;
+        }
       </style>
   </head>
   <body>
@@ -50,19 +82,57 @@
             <div class="row">
               <div class="col-8">
                 <div class="card">
-                  <div class="card-header">
-                    <%= data.qno %>
-                  </div>
+                  <div class="card-header">Section</div>
                   <div class="card-body">
+                    <% if(data.qno <= 25){ %>
+                      <a href="#" class="btn btn-fill btn-primary">Physics</a>
+                      <a href="/user/qn/26" class="btn btn-primary">Chemistry</a>
+                      <a href="/user/qn/51" class="btn btn-primary">Mathematics</a>
+                    <% }else if(data.qno <= 50){ %>
+                      <a href="/user/qn/1" class="btn btn-primary">Physics</a>
+                      <a href="#" class="btn btn-fill btn-primary">Chemistry</a>
+                      <a href="/user/qn/51" class="btn btn-primary">Mathematics</a>
+                    <% }else{ %>
+                      <a href="/user/qn/1" class="btn btn-primary">Physics</a>
+                      <a href="/user/qn/26" class="btn btn-primary">Chemistry</a>
+                      <a href="#" class="btn btn-fill btn-primary">Mathematics</a>
+                    <% } %>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-6">Question Number : <%= data.qno %></div>
+                      <div class="col-6" style="text-align: right;">
+                        Type :
+                        <% if(data.qtype == 1){ %>
+                          Multiple Choice Question
+                        <% }else{ %>
+                          Numeric
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body" style="margin-top: -35px !important;">
+                    <hr>
                     <%- data.description %>
                     <% if(data.image != ''){ %>
                       <img src="../../uploads/<%= data.image %>" class="question-image" alt="question image can't preview">
                     <% } %>
-                    <% if(data.qtype == 1){ %>
-                      Multiple Choice
-                    <% }else{ %>
-                      Numeric
-                    <% } %>
+                    <hr>
+                  </div>
+                  <div class="container" style="padding-bottom: 10px;">
+                    <div class="row">
+                      <div class="col-3">
+                        <a href="#" class="btn btn-fill btn-secondary btn-block">Clear Answer</a>
+                      </div>
+                      <div class="col-3">
+                        <a href="#" class="btn btn-fill btn-secondary btn-block">Edit Answer</a>
+                      </div>
+                      <div class="col-6" style="text-align: right">
+                        <a href="/user/qn/<%= data.qno + 1 %>" class="btn btn-block btn-fill btn-info">Next</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -80,7 +150,53 @@
                     </div>
                   </div>
                   <div class="card-body">
-
+                    <div class="container" style="background: rgb(247, 247, 248); padding-top: 20px; border-radius: 10px; padding-bottom: 40px;">
+                      You viewing <strong><%= data.subject.charAt(0).toUpperCase()+data.subject.slice(1) %></strong> Section
+                      <div style="margin-top: 30px;">
+                        Question Palette
+                        <div class="row" style="margin-top: 20px;">
+                          <% if(data.subject == 'physics') { %>
+                            <% var st = 1, en = 25; %>
+                          <% }else if(data.subject == 'chemistry'){ %>
+                            <% var st = 26, en = 50; %>
+                          <% }else{ %>
+                            <% var st = 51, en = 75; %>
+                          <% } %>
+                          <% for(var i = st; i <= en; i++) { %>
+                            <div class="col-3">
+                              <a href="/user/qn/<%= i %>">
+                                <div class="round blue"><%= i %></div>
+                              </a>
+                            </div>
+                          <% } %>
+                        </div>
+                      </div>
+                      <div style="margin-top: 10px;">
+                        <strong>Legend</strong>
+                        <table style="margin-top: 10px;">
+                          <tr>
+                            <td>
+                              <span class="round green"></span>
+                            </td>
+                            <td>Answered</td>
+                            <td>
+                              <span class="round red"></span>
+                            </td>
+                            <td>Not Answered</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span class="round purple"></span>
+                            </td>
+                            <td>Marked</td>
+                            <td>
+                              <span class="round blue"></span>
+                            </td>
+                            <td>Not Visited</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

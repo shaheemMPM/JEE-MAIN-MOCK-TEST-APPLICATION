@@ -33,12 +33,12 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
           }else {
             stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 1, start_time: new Date }}, (erru, upd) => {
               if (erru) {
-                console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.2 ::\n${err}\n`)
+                console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.2 ::\n${erru}\n`)
                 res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
               }else {
                 stdDat.find({regno: req.user.username}, 'regno name start_time', (ermr, rses) => {
                   if (ermr) {
-                    console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${err}\n`)
+                    console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${ermr}\n`)
                     res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
                   }else {
                     res.render('examqn', {data: results[0], user: rses[0]})
@@ -63,7 +63,7 @@ app.get('/qn/:id', userFns.isUserLoggedIn, (req, res) => {
     }else {
       stdDat.find({regno: req.user.username}, 'regno name start_time', (ermr, rses) => {
         if (ermr) {
-          console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${err}\n`)
+          console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${ermr}\n`)
           res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
         }else {
           res.render('examqn', {data: results[0], user: rses[0]})
@@ -71,6 +71,25 @@ app.get('/qn/:id', userFns.isUserLoggedIn, (req, res) => {
       })
     }
   })
+})
+
+app.get('/finish/:id', userFns.isUserLoggedIn, (req, res) => {
+  if (req.params.id === '03026bbc133714df') {
+    stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 2, end_time: new Date }}, (erru, upd) => {
+      if (erru) {
+        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam ::\n${erru}\n`)
+        res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
+      }else {
+        console.log(`\n${new Date().toLocaleString()} : ${req.user.username} Finished Exam\n\n`)
+        req.logout()
+        res.redirect('/user/login')
+      }
+    })
+  }else {
+    console.log(`\n${new Date().toLocaleString()} : XSS Attack Detected\nIP of Attacker : ${req.connection}\nUser: ${req.user.username}\n`)
+    req.logout()
+    res.send(`<script>alert("You Are Disqualified due to un autherised XSS Activity")</script>`)
+  }
 })
 
 app.get('/logout', userFns.isUserLoggedIn, (req, res) => {

@@ -24,6 +24,16 @@
                     user-select: none; /* Non-prefixed version, currently
                                           supported by Chrome, Opera and Firefox */
         }
+        .ipfld{
+          cursor: default;
+          -webkit-touch-callout: auto; /* iOS Safari */
+            -webkit-user-select: auto; /* Safari */
+             -khtml-user-select: auto; /* Konqueror HTML */
+               -moz-user-select: auto; /* Old versions of Firefox */
+                -ms-user-select: auto; /* Internet Explorer/Edge */
+                    user-select: auto; /* Non-prefixed version, currently
+                                          supported by Chrome, Opera and Firefox */
+        }
         .round{
           width: 35px;
           height: 35px;
@@ -119,18 +129,36 @@
                     <% if(data.image != ''){ %>
                       <img src="../../uploads/<%= data.image %>" class="question-image" alt="question image can't preview">
                     <% } %>
+                    <div style="margin-top: 30px;">
+                      <span>Select Option</span>
+                      <form action="#" method="post" style="margin: 10px auto 10px auto;">
+                        <% if(data.qtype == 1){ %>
+                          <div>
+                            <input class="" type="radio" name="selopt" value="A">&nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input class="" type="radio" name="selopt" value="B">&nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input class="" type="radio" name="selopt" value="C">&nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input class="" type="radio" name="selopt" value="D">&nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                          </div>
+                        <% }else{ %>
+                          <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer">
+                        <% } %>
+                      </form>
+                    </div>
                     <hr>
                   </div>
                   <div class="container" style="padding-bottom: 10px;">
                     <div class="row">
                       <div class="col-3">
-                        <a href="#" class="btn btn-fill btn-secondary btn-block">Clear Answer</a>
+                        <a href="#" class="btn btn-fill btn-success btn-block">Mark for Review & Next</a>
                       </div>
                       <div class="col-3">
-                        <a href="#" class="btn btn-fill btn-secondary btn-block">Edit Answer</a>
+                        <a href="#" class="btn btn-fill btn-danger btn-block">Clear Response</a>
                       </div>
-                      <div class="col-6" style="text-align: right">
-                        <a href="/user/qn/<%= data.qno + 1 %>" class="btn btn-block btn-fill btn-info">Next</a>
+                      <div class="col-3">
+                        <!-- <a href="#" class="btn btn-fill btn-warning btn-block">Edit Answer</a> -->
+                      </div>
+                      <div class="col-3" style="text-align: right">
+                        <a href="/user/qn/<%= data.qno + 1 %>" class="btn btn-block btn-fill btn-info">Save & Next</a>
                       </div>
                     </div>
                   </div>

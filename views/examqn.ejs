@@ -176,9 +176,9 @@
                           <% } %>
                         <% }else{ %>
                           <% if(user.ans[data.qno] == ''){ %>
-                            <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required>
+                            <input type="text" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required>
                           <% }else{ %>
-                            <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required value="<%= user.ans[data.qno] %>">
+                            <input type="text" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required value="<%= user.ans[data.qno] %>">
                           <% } %>
                         <% } %>
                       </form>

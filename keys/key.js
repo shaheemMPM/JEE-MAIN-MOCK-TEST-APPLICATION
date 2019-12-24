@@ -1,3 +1,3 @@
 module.exports = {
-  accesscode: ""
+  accesscode: "122333#123"
 }

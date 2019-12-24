@@ -332,7 +332,7 @@
       })
 
       document.getElementById('btnClear').addEventListener('click', function() {
-        console.log('Clicked on Clear');
+        window.location.href = '/respond/clearmark/'+<%= data.qno %>;
       })
 
       document.getElementById('btnSave').addEventListener('click', function() {

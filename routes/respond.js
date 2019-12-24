@@ -28,7 +28,7 @@ app.post('/mark', userFns.isUserLoggedIn, (req, res) => {
             tempActivity = `MARK::${req.body.qno}::${new Date().toLocaleString()}`
             let actt = {}
             actt['activities'] = tempActivity
-            stdDat.updateOne({regno: req.user.username}, { $set: tempup, $push: actt }, (erru, updt) =>{
+            stdDat.updateOne({regno: req.user.username}, { $set: tempup, $push: actt }, (erru, updt) => {
               if (erru) {
                 console.log(`\n${new Date().toLocaleString()} : Error on Marking Answer 1.2 ::\n${err}\n`)
                 res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
@@ -42,6 +42,24 @@ app.post('/mark', userFns.isUserLoggedIn, (req, res) => {
           }
         }
       })
+    }
+  })
+})
+
+app.get('/clearmark/:id', userFns.isUserLoggedIn, (req, res) => {
+  let tempup = {}
+  tempup['qstatus.'+req.params.id] = 1
+  tempup['ans.'+req.params.id] = ''
+  tempup['marks.'+req.params.id] = 0
+  tempActivity = `CLEAR::${req.params.id}::${new Date().toLocaleString()}`
+  let actt = {}
+  actt['activities'] = tempActivity
+  stdDat.updateOne({regno: req.user.username}, { $set: tempup, $push: actt }, (erru, updt) => {
+    if (erru) {
+      console.log(`\n${new Date().toLocaleString()} : Error on Clering Answer 1.0 ::\n${err}\n`)
+      res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
+    }else {
+      res.redirect('/user/qn/'+req.params.id)
     }
   })
 })

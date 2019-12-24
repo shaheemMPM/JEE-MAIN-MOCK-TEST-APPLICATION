@@ -11,14 +11,15 @@ const express               = require('express'),
       userSchema            = require('./models/user'),
       dashboardRoutes       = require('./routes/dashboard'),
       stdRoutes             = require('./routes/students'),
-      userRoutes            = require('./routes/userview')
+      userRoutes            = require('./routes/userview'),
+      respondRoutes         = require('./routes/respond')
 
 // Connecting Database
 mongoose.connect('mongodb://localhost/insight', {useNewUrlParser: true, useUnifiedTopology: true})
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 
 // setting view engine
 app.set('view engine', 'ejs')
@@ -42,7 +43,6 @@ passport.deserializeUser(userSchema.deserializeUser())
 
 app.get('/', userFns.isNotLoggedIn, (req, res) => {
   res.redirect('/user/login')
-  // later make to student login page for better convinience
 })
 
 // Setting up routes
@@ -50,6 +50,7 @@ app.use('/', adminRoutes)
 app.use('/dashboard', dashboardRoutes)
 app.use('/student', stdRoutes)
 app.use('/user', userRoutes)
+app.use('/respond', respondRoutes)
 
 // Activating server
 const port = process.env.PORT || 3000

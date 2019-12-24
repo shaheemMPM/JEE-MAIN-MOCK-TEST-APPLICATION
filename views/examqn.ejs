@@ -131,16 +131,16 @@
                     <% } %>
                     <div style="margin-top: 30px;">
                       <span>Select Option</span>
-                      <form action="#" method="post" style="margin: 10px auto 10px auto;">
+                      <form id="formResponse" action="#" method="post" style="margin: 10px auto 10px auto;">
                         <% if(data.qtype == 1){ %>
                           <div>
-                            <input class="" type="radio" name="selopt" value="A">&nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input class="" type="radio" name="selopt" value="B">&nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input class="" type="radio" name="selopt" value="C">&nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input class="" type="radio" name="selopt" value="D">&nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
                           </div>
                         <% }else{ %>
-                          <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer">
+                          <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required>
                         <% } %>
                       </form>
                     </div>
@@ -149,16 +149,16 @@
                   <div class="container" style="padding-bottom: 10px;">
                     <div class="row">
                       <div class="col-3">
-                        <a href="#" class="btn btn-fill btn-success btn-block">Mark for Review & Next</a>
+                        <a href="#" id="btnMark" class="btn btn-fill btn-success btn-block">Mark for Review & Next</a>
                       </div>
                       <div class="col-3">
-                        <a href="#" class="btn btn-fill btn-danger btn-block">Clear Response</a>
+                        <a href="#" id="btnClear" class="btn btn-fill btn-danger btn-block">Clear Response</a>
                       </div>
                       <div class="col-3">
                         <!-- <a href="#" class="btn btn-fill btn-warning btn-block">Edit Answer</a> -->
                       </div>
                       <div class="col-3" style="text-align: right">
-                        <a href="/user/qn/<%= data.qno + 1 %>" class="btn btn-block btn-fill btn-info">Save & Next</a>
+                        <a href="#" id="btnSave" class="btn btn-block btn-fill btn-info">Save & Next</a>
                       </div>
                     </div>
                   </div>
@@ -247,8 +247,6 @@
       document.addEventListener('contextmenu', event => event.preventDefault());
       var now = new Date(`<%- user.start_time %>`);
       var threeHourLater = now.getTime() + (3*60*60*1000);
-      console.log(`Now : ${now}`);
-      console.log(`threeHourLater : ${new Date(threeHourLater)}`);
 
       // Set the date we're counting down to
       var countDownDate = new Date(threeHourLater).getTime();
@@ -279,8 +277,30 @@
           document.getElementById("btnFinish").click();
         }
       }, 1000);
-      var tpx = <%- user.qstatus %>;
-      console.log(tpx[]);
+
+      document.getElementById('btnMark').addEventListener('click', function() {
+        var anForm = document.getElementById('formResponse');
+        anForm.action = '/respond/mark';
+        var ipQno = document.createElement('input');
+        ipQno.type = 'number';
+        ipQno.name = 'qno';
+        ipQno.value = `<%= data.qno %>`;
+        ipQno.style.display = 'none';
+        anForm.appendChild(ipQno);
+        var btnSubmit = document.createElement('input');
+        btnSubmit.type = 'submit';
+        btnSubmit.style.display = 'none';
+        anForm.appendChild(btnSubmit);
+        btnSubmit.click();
+      })
+
+      document.getElementById('btnClear').addEventListener('click', function() {
+        console.log('Clicked on Clear');
+      })
+
+      document.getElementById('btnSave').addEventListener('click', function() {
+        console.log('Clicked on Save');
+      })
     </script>
   </body>
 </html>

@@ -82,12 +82,23 @@ app.get('/clearstudents', userFns.isAdminLoggedIn, (req, res) => {
 })
 
 app.get('/moniter', userFns.isAdminLoggedIn, (req, res) => {
-  stData.find({}, (err, results) => {
+  stData.find({}, 'regno name dob mtotal',(err, results) => {
     if (err) {
       console.log(`Error on rendering student page data : ${err}`)
       res.render('monitor', {data: []})
     }else {
       res.render('monitor', {data: results})
+    }
+  })
+})
+
+app.get('/moniter/:id', userFns.isAdminLoggedIn, (req, res) => {
+  stData.find({regno: req.params.id}, (err, results) => {
+    if (err) {
+      console.log(`Error on rendering individual student page data : ${err}`)
+      res.redirect('/student/moniter')
+    }else {
+      res.render('monitorind', {data: results[0]})
     }
   })
 })

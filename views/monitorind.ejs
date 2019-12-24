@@ -6,8 +6,8 @@
     <title>Create Students | Dashboard | INSIGHT PLUS | JEE MAINS - Mock Test</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!-- CSS Files -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../css/light-bootstrap-dashboard.css" rel="stylesheet" />
     <style media="screen">
       .cs-tbl{
         background-color: white;
@@ -76,7 +76,7 @@
                         </a>
                     </li> -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/student/moniter">
                             <i class="nc-icon nc-notes"></i>
                             <p>Monitor Students</p>
                         </a>
@@ -121,14 +121,86 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <% data.forEach(function(el){ %>
+                        <tr>
+                          <td><%= data.regno %></td>
+                          <td><%= data.name %></td>
+                          <td><%= data.dob %></td>
+                          <td><%= data.mtotal %></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-12">
+                    <table class="table table-bordered table-hover cs-tbl">
+                      <thead>
+                        <tr>
+                          <th>Exam Status</th>
+                          <th>Exam Started Time</th>
+                          <th>Exam Finished Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <% if(data.exam_stat == 0){ %>
+                              <span style="color: rgb(233, 47, 0)">Not Started</span>
+                            <% }else if(data.exam_stat == 1){%>
+                              <span style="color: rgb(0, 108, 255)">Started</span>
+                            <% }else{ %>
+                              <span style="color: rgb(66, 150, 77)">Finished</span>
+                            <% } %>
+                          </td>
+                          <td><%= data.start_time %></td>
+                          <td><%= data.end_time %></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-12">
+                    <table class="table table-bordered table-hover cs-tbl">
+                      <thead>
+                        <tr>
+                          <th>Qno</th>
+                          <th>Status</th>
+                          <th>Answer Given</th>
+                          <th>Mark</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 1; i <= 75; i++) { %>
                           <tr>
-                            <td><a href="/student/moniter/<%= el.regno %>"><%= el.regno %></a></td>
-                            <td><%= el.name %></td>
-                            <td><%= el.dob %></td>
-                            <td><%= el.mtotal %></td>
+                            <td><%= i %></td>
+                            <td>
+                              <% if(data.qstatus[i] == 0){ %>
+                                <span style="color: rgb(0, 108, 255)">Not Visited</span>
+                              <% }else if(data.qstatus[i] == 1){%>
+                                <span style="color: rgb(233, 47, 0)">Not Answered</span>
+                              <% }else if(data.qstatus[i] == 2){%>
+                                <span style="color: rgb(153, 66, 210)">Marked</span>
+                              <% }else{ %>
+                                <span style="color: rgb(66, 150, 77)">Answered</span>
+                              <% } %>
+                            </td>
+                            <td><%= data.ans[i] %></td>
+                            <td><%= data.marks[i] %></td>
                           </tr>
-                        <% })%>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-12">
+                    <table class="table table-bordered table-hover cs-tbl">
+                      <thead>
+                        <tr>
+                          <th align="center">Student Activities Log</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 0; i < data.activities.length; i++){ %>
+                          <tr>
+                            <td><%= data.activities[i] %></td>
+                          </tr>
+                        <% } %>
                       </tbody>
                     </table>
                   </div>
@@ -149,6 +221,6 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="../js/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery.3.2.1.min.js" type="text/javascript"></script>
   </body>
 </html>

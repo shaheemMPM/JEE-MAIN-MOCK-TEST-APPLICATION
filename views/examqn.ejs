@@ -193,7 +193,15 @@
                           <% for(var i = st; i <= en; i++) { %>
                             <div class="col-3">
                               <a href="/user/qn/<%= i %>">
-                                <div class="round blue"><%= i %></div>
+                                <% if(user.qstatus[i] == 0){ %>
+                                  <div class="round blue"><%= i %></div>
+                                <% }else if(user.qstatus[i] == 1){ %>
+                                  <div class="round red"><%= i %></div>
+                                <% }else if(user.qstatus[i] == 2){ %>
+                                  <div class="round purple"><%= i %></div>
+                                <% }else{ %>
+                                  <div class="round green"><%= i %></div>
+                                <% } %>
                               </a>
                             </div>
                           <% } %>
@@ -271,6 +279,8 @@
           document.getElementById("btnFinish").click();
         }
       }, 1000);
+      var tpx = <%- user.qstatus %>;
+      console.log(tpx[]);
     </script>
   </body>
 </html>

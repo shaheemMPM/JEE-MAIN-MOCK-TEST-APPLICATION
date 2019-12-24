@@ -149,6 +149,9 @@
   document.getElementById('btnUpload').addEventListener("click", function() {
     var qnHTML = CKEDITOR.instances.qncode.getData();
     // if (qnHTML.length !== 0) {
+      if (qnHTML.length == 0) {
+        qnHTML = ' '
+      }
       var qnForm = document.getElementById('qnupload');
       var ipQn = document.createElement('input');
       ipQn.type = 'text';

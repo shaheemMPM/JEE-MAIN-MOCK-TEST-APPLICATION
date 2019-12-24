@@ -41,6 +41,7 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
                     console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${ermr}\n`)
                     res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
                   }else {
+                    console.log(`${new Date().toLocaleString()} : ${req.user.username} Started Exam`)
                     res.render('examqn', {data: results[0], user: rses[0]})
                   }
                 })
@@ -102,7 +103,7 @@ app.get('/finish/:id', userFns.isUserLoggedIn, (req, res) => {
         console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.0 ::\n${erru}\n`)
         res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
       }else {
-        console.log(`\n${new Date().toLocaleString()} : ${req.user.username} Finished Exam\n\n`)
+        console.log(`${new Date().toLocaleString()} : ${req.user.username} Finished Exam`)
         req.logout()
         res.redirect('/user/login')
       }

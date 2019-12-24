@@ -336,7 +336,19 @@
       })
 
       document.getElementById('btnSave').addEventListener('click', function() {
-        console.log('Clicked on Save');
+        var anForm = document.getElementById('formResponse');
+        anForm.action = '/respond/save';
+        var ipQno = document.createElement('input');
+        ipQno.type = 'number';
+        ipQno.name = 'qno';
+        ipQno.value = `<%= data.qno %>`;
+        ipQno.style.display = 'none';
+        anForm.appendChild(ipQno);
+        var btnSubmit = document.createElement('input');
+        btnSubmit.type = 'submit';
+        btnSubmit.style.display = 'none';
+        anForm.appendChild(btnSubmit);
+        btnSubmit.click();
       })
     </script>
   </body>

@@ -98,21 +98,33 @@ app.get('/qn/:id', userFns.isUserLoggedIn, (req, res) => {
 
 app.get('/finish/:id', userFns.isUserLoggedIn, (req, res) => {
   if (req.params.id === '03026bbc133714df') {
-    stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 2, end_time: new Date }}, (erru, upd) => {
-      if (erru) {
+    let tmark = 0
+    stdDat.find({regno: req.user.username}, 'marks', (err, fnd) => {
+      if (err) {
         console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.0 ::\n${erru}\n`)
         res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
       }else {
-        console.log(`${new Date().toLocaleString()} : ${req.user.username} Finished Exam`)
-        req.logout()
-        res.redirect('/user/login')
+        for (var i = 1; i <= 75; i++) {
+          tmark += fnd[0].marks[i]
+        }
+        console.log(`Total Mark of ${req.user.username} : ${tmark}`)
+        stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 2, end_time: new Date, mtotal: tmark }}, (erru, upd) => {
+          if (erru) {
+            console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.1 ::\n${erru}\n`)
+            res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
+          }else {
+            console.log(`${new Date().toLocaleString()} : ${req.user.username} Finished Exam`)
+            req.logout()
+            res.redirect('/user/login')
+          }
+        })
       }
     })
   }else {
     console.log(`\n${new Date().toLocaleString()} : XSS Attack Detected\nIP of Attacker : ${req.connection.remoteAddress}\nUser: ${req.user.username}\n`)
     stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 3, end_time: new Date }}, (erru, upd) => {
       if (erru) {
-        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.1 ::\n${erru}\n`)
+        console.log(`\n${new Date().toLocaleString()} : Error on finishing exam 1.2 ::\n${erru}\n`)
         res.send(`<script>alert("You Are Disqualified due to un autherised XSS Activity")</script>`)
       }else {
         req.logout()

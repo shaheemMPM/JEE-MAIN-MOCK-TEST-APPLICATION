@@ -58,7 +58,8 @@ let stddataSchema = new mongoose.Schema({
     66: {type: Number, default: 0}, 67: {type: Number, default: 0}, 68: {type: Number, default: 0}, 69: {type: Number, default: 0}, 70: {type: Number, default: 0},
     71: {type: Number, default: 0}, 72: {type: Number, default: 0}, 73: {type: Number, default: 0}, 74: {type: Number, default: 0}, 75: {type: Number, default: 0}
   },
-  activities: [String]
+  activities: [String],
+  mtotal: {type: Number, default: 0}
 }, {strict:false})
 
 module.exports = mongoose.model("Stddata", stddataSchema)

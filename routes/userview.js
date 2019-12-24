@@ -25,7 +25,7 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
       console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.0 ::\n${err}\n`)
       res.send(`<script>alert("Server Error, Contact Invigilator")</script>`)
     }else {
-      // if (ress[0].exam_stat == 0) {
+      if (ress[0].exam_stat == 0) {
         qnDb.find({qno: 1}, '-__v -option', (err, results) => {
           if (err) {
             console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.1 ::\n${err}\n`)
@@ -49,9 +49,9 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
             })
           }
         })
-      // }else {
-        // res.send(`<script>alert("User Already Taken Exam")</script>`)
-      // }
+      }else {
+        res.send(`<script>alert("User Already Taken Exam")</script>`)
+      }
     }
   })
 })

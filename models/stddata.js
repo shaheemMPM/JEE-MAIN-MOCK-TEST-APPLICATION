@@ -7,6 +7,23 @@ let stddataSchema = new mongoose.Schema({
   exam_stat: {type: Number, default: 0},
   start_time: Date,
   end_time: Date,
+  ans: {
+    1: {type: String, default: ''}, 2: {type: String, default: ''}, 3: {type: String, default: ''}, 4: {type: String, default: ''}, 5: {type: String, default: ''},
+    6: {type: String, default: ''}, 7: {type: String, default: ''}, 8: {type: String, default: ''}, 9: {type: String, default: ''}, 10: {type: String, default: ''},
+    11: {type: String, default: ''}, 12: {type: String, default: ''}, 13: {type: String, default: ''}, 14: {type: String, default: ''}, 15: {type: String, default: ''},
+    16: {type: String, default: ''}, 17: {type: String, default: ''}, 18: {type: String, default: ''}, 19: {type: String, default: ''}, 20: {type: String, default: ''},
+    21: {type: String, default: ''}, 22: {type: String, default: ''}, 23: {type: String, default: ''}, 24: {type: String, default: ''}, 25: {type: String, default: ''},
+    26: {type: String, default: ''}, 27: {type: String, default: ''}, 28: {type: String, default: ''}, 29: {type: String, default: ''}, 30: {type: String, default: ''},
+    31: {type: String, default: ''}, 32: {type: String, default: ''}, 33: {type: String, default: ''}, 34: {type: String, default: ''}, 35: {type: String, default: ''},
+    36: {type: String, default: ''}, 37: {type: String, default: ''}, 38: {type: String, default: ''}, 39: {type: String, default: ''}, 40: {type: String, default: ''},
+    41: {type: String, default: ''}, 42: {type: String, default: ''}, 43: {type: String, default: ''}, 44: {type: String, default: ''}, 45: {type: String, default: ''},
+    46: {type: String, default: ''}, 47: {type: String, default: ''}, 48: {type: String, default: ''}, 49: {type: String, default: ''}, 50: {type: String, default: ''},
+    51: {type: String, default: ''}, 52: {type: String, default: ''}, 53: {type: String, default: ''}, 54: {type: String, default: ''}, 55: {type: String, default: ''},
+    56: {type: String, default: ''}, 57: {type: String, default: ''}, 58: {type: String, default: ''}, 59: {type: String, default: ''}, 60: {type: String, default: ''},
+    61: {type: String, default: ''}, 62: {type: String, default: ''}, 63: {type: String, default: ''}, 64: {type: String, default: ''}, 65: {type: String, default: ''},
+    66: {type: String, default: ''}, 67: {type: String, default: ''}, 68: {type: String, default: ''}, 69: {type: String, default: ''}, 70: {type: String, default: ''},
+    71: {type: String, default: ''}, 72: {type: String, default: ''}, 73: {type: String, default: ''}, 74: {type: String, default: ''}, 75: {type: String, default: ''}
+  },
   marks: {
     1: {type: Number, default: 0}, 2: {type: Number, default: 0}, 3: {type: Number, default: 0}, 4: {type: Number, default: 0}, 5: {type: Number, default: 0},
     6: {type: Number, default: 0}, 7: {type: Number, default: 0}, 8: {type: Number, default: 0}, 9: {type: Number, default: 0}, 10: {type: Number, default: 0},

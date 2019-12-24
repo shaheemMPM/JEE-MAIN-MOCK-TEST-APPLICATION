@@ -133,34 +133,71 @@
                       <span>Select Option</span>
                       <form id="formResponse" action="#" method="post" style="margin: 10px auto 10px auto;">
                         <% if(data.qtype == 1){ %>
-                          <div>
-                            <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
-                            <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
-                          </div>
+                          <% if(user.ans[data.qno] == ''){ %>
+                            <div>
+                              <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                              <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                              <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                              <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                            </div>
+                          <% }else{ %>
+                            <% if(user.ans[data.qno] == 'A'){ %>
+                              <div>
+                                <input type="radio" name="selopt" value="A" checked required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                              </div>
+                            <% }else if(user.ans[data.qno] == 'B'){ %>
+                              <div>
+                                <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="B" checked required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                              </div>
+                            <% }else if(user.ans[data.qno] == 'C'){ %>
+                              <div>
+                                <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="C" checked required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="D" required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                              </div>
+                            <% }else{ %>
+                              <div>
+                                <input type="radio" name="selopt" value="A" required> &nbsp;A &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="B" required> &nbsp;B &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="C" required> &nbsp;C &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="selopt" value="D" checked required> &nbsp;D &nbsp; &nbsp; &nbsp; &nbsp;
+                              </div>
+                            <% } %>
+                          <% } %>
                         <% }else{ %>
-                          <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required>
+                          <% if(user.ans[data.qno] == ''){ %>
+                            <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required>
+                          <% }else{ %>
+                            <input type="number" class="ipfld form-control" name="selopt" placeholder="Enter Numeric Answer" required value="<%= user.ans[data.qno] %>">
+                          <% } %>
                         <% } %>
                       </form>
                     </div>
                     <hr>
                   </div>
                   <div class="container" style="padding-bottom: 10px;">
-                    <div class="row">
-                      <div class="col-3">
-                        <a href="#" id="btnMark" class="btn btn-fill btn-success btn-block">Mark for Review & Next</a>
+                    <% if(user.qstatus[data.qno] < 3) { %>
+                      <div class="row">
+                        <div class="col-3">
+                          <a href="#" id="btnMark" class="btn btn-fill btn-success btn-block">Mark for Review & Next</a>
+                        </div>
+                        <div class="col-3">
+                          <a href="#" id="btnClear" class="btn btn-fill btn-danger btn-block">Clear Response</a>
+                        </div>
+                        <div class="col-3">
+                        </div>
+                        <div class="col-3" style="text-align: right">
+                          <a href="#" id="btnSave" class="btn btn-block btn-fill btn-info">Save & Next</a>
+                        </div>
                       </div>
-                      <div class="col-3">
-                        <a href="#" id="btnClear" class="btn btn-fill btn-danger btn-block">Clear Response</a>
-                      </div>
-                      <div class="col-3">
-                        <!-- <a href="#" class="btn btn-fill btn-warning btn-block">Edit Answer</a> -->
-                      </div>
-                      <div class="col-3" style="text-align: right">
-                        <a href="#" id="btnSave" class="btn btn-block btn-fill btn-info">Save & Next</a>
-                      </div>
-                    </div>
+                    <% } %>
                   </div>
                 </div>
               </div>

@@ -23,6 +23,7 @@ app.post('/mark', userFns.isUserLoggedIn, (req, res) => {
             }
             let tempup = {}
             tempup['qstatus.'+req.body.qno] = 2
+            tempup['ans.'+req.body.qno] = req.body.selopt
             tempup['marks.'+req.body.qno] = tempMark
             tempActivity = `MARK::${req.body.qno}::${new Date().toLocaleString()}`
             let actt = {}

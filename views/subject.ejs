@@ -148,7 +148,7 @@
   });
   document.getElementById('btnUpload').addEventListener("click", function() {
     var qnHTML = CKEDITOR.instances.qncode.getData();
-    if (qnHTML.length !== 0) {
+    // if (qnHTML.length !== 0) {
       var qnForm = document.getElementById('qnupload');
       var ipQn = document.createElement('input');
       ipQn.type = 'text';
@@ -167,9 +167,9 @@
       btnSubmit.style.display = 'none';
       qnForm.appendChild(btnSubmit);
       btnSubmit.click();
-    }else {
-      alert("No Question found")
-    }
+    // }else {
+    //   alert("No Question found")
+    // }
   });
 </script>
 </html>

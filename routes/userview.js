@@ -31,16 +31,17 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
             console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.1 ::\n${err}\n`)
             res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
           }else {
-            stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 1, start_time: new Date }}, (erru, upd) => {
+            stdDat.updateOne({regno: req.user.username}, { $set: { exam_stat: 1, start_time: new Date, 'qstatus.1': 1}}, (erru, upd) => {
               if (erru) {
                 console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.2 ::\n${erru}\n`)
                 res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
               }else {
-                stdDat.find({regno: req.user.username}, 'regno name start_time', (ermr, rses) => {
+                stdDat.find({regno: req.user.username}, 'regno name start_time qstatus', (ermr, rses) => {
                   if (ermr) {
                     console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${ermr}\n`)
                     res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
                   }else {
+                    console.log(rses[0].qstatus)
                     res.render('examqn', {data: results[0], user: rses[0]})
                   }
                 })
@@ -58,15 +59,25 @@ app.post('/startexam', userFns.isUserLoggedIn, (req, res) => {
 app.get('/qn/:id', userFns.isUserLoggedIn, (req, res) => {
   qnDb.find({qno: req.params.id}, '-__v -option', (err, results) => {
     if (err) {
-      console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.1 ::\n${err}\n`)
+      console.log(`\n${new Date().toLocaleString()} : Error on finding question 2.0 ::\n${err}\n`)
       res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
     }else {
-      stdDat.find({regno: req.user.username}, 'regno name start_time', (ermr, rses) => {
-        if (ermr) {
-          console.log(`\n${new Date().toLocaleString()} : Error on finding question 1.3 ::\n${ermr}\n`)
+      let temp = {}
+      temp['qstatus.'+req.params.id] = 1
+      stdDat.updateOne({regno: req.user.username}, { $set: temp}, (erru, ress) => {
+        if (erru) {
+          console.log(`\n${new Date().toLocaleString()} : Error on finding question 2.1 ::\n${erru}\n`)
           res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
         }else {
-          res.render('examqn', {data: results[0], user: rses[0]})
+          stdDat.find({regno: req.user.username}, 'regno name start_time qstatus', (ermr, rses) => {
+            if (ermr) {
+              console.log(`\n${new Date().toLocaleString()} : Error on finding question 2.2 ::\n${ermr}\n`)
+              res.send(`<script>alert("Server Error Contact Invigilator")</script>`)
+            }else {
+              console.log(rses[0].qstatus)
+              res.render('examqn', {data: results[0], user: rses[0]})
+            }
+          })
         }
       })
     }

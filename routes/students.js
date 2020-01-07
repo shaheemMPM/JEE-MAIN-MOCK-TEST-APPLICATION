@@ -103,4 +103,15 @@ app.get('/moniter/:id', userFns.isAdminLoggedIn, (req, res) => {
   })
 })
 
+app.get('/viewfull', userFns.isAdminLoggedIn, (req, res) => {
+  stData.find({}, (err, results) => {
+    if (err) {
+      console.log(`Error on rendering full student page data : ${err}`)
+      res.redirect('/student/moniter')
+    }else {
+      res.render('allstdsummary', {datas: results})
+    }
+  })
+})
+
 module.exports = app
